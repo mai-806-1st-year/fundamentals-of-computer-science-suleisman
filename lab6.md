@@ -41,10 +41,10 @@
 Допущен к выполнению работы.  
 <b>Подпись преподавателя</b> ________________
 ## 8. Распечатка протокола 
-
+Основная машина:  
 ![Снимок экрана 2022-11-10 215638](https://user-images.githubusercontent.com/113765497/201182487-56b5b511-824d-440c-bff0-cf4e522a348c.png)  
 
-
+Побочные машины:  
 ![image](https://user-images.githubusercontent.com/113765497/201182812-bd966115-d464-467f-933d-8571d477122b.png)  
 
 ![image](https://user-images.githubusercontent.com/113765497/201183011-06800f5c-60d9-4b14-b9bc-8104a9f1d55d.png)
