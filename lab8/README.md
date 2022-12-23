@@ -30,90 +30,55 @@
 Введём любые числа.
 Тесты:
 ```
-1
-1
-```
-```
-2
-1 2
-3 4
-```
-```
-3
-1 2 3
-4 5 6
-7 1 2
-```
-```
-4
-4 5 6 3
-1 2 1 1
-4 3 2 8
-2 1 2 2
-```
-```
 #include <stdio.h>
-
-#define N (7)
-
-
-void matrix_print(size_t n, int (*mat)[n]) {
-
-
-    int elem_min = mat[0][0];
-    int max_j = 0;
-    for(int i = 0;i < n; i++) {
-        for(int j = 0 ;j < n; j++) {
-            if(elem_min > mat[i][j]) {
-                elem_min = mat[i][j];
-                max_j = j;
-            } else 
-                if(elem_min == mat[i][j]) {
-                    if(j > max_j) {
-                        max_j = j;
-                    }   
-
-                }
-
-
-        }
-    
-    }
-    int proizv = 1;
-    for(int i = 0;i < n; i++) {
-        proizv = proizv*mat[i][max_j]; 
-    }
-    printf("%d ",proizv);
+#include <stdlib.h>
+#include <math.h>
 
 
 
-}
+int main()
+{
+ 
 
  
 
 
+    double x0,y0,x,y,a,b,c,r;
+  
+    scanf("%lf %lf",&x0,&y0);
+ 
+    scanf("%lf",&r); 
+
+    scanf("%lf %lf  %lf",&a,&b,&c);
 
 
 
 
-void matrix_input(size_t n, int (*mat)[n]) {
-    for (int i = 0; i < n; ++i) {
-        for (int j = 0; j < n; ++j) {
-            scanf("%d", &mat[i][j]);
-        }
+
+    double k=-(a/b);
+    double l=-(c/b);
+
+ 
+    double d1 = k*k + 1;
+    double d2 = 2 * k * (l - y0) - 2 * x0;
+    double d3 = x0*x0 - r*r + (l - y0)*(l - y0);
+    double D = d2*d2 - 4 * d1 * d3;
+    if (D >= 0) {
+        double x1 = (-d2 - sqrt(D)) / (2. * d1);
+        double y1 = k * x1 + l;
+        double x2 = (-d2 + sqrt(D)) / (2. * d1);
+        double y2 = k * x2 + l;
+        printf("%lf %lf\n %lf %lf\n",x1,y1,x2,y2); 
     }
-}
 
 
-int main(void) {
-    size_t n;
-    scanf("%zu", &n);
-    int mat[N * N];
-    matrix_input(n, (int (*)[n]) mat);
-    matrix_print(n, (int (*)[n]) mat);
+
+      
+  
+ 
+  
     return 0;
 }
-
   
 ```
 
