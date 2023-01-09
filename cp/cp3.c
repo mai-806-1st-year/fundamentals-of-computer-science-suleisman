@@ -44,7 +44,7 @@ int main () {
     for (int i = 1; i <= n+1; i++) {
         long double d = 1;
         x = x+((a - b)/n);
-        ans = 0;
+        ans = 1;
         cnt = 1;
         f = func (x);
         while (fabs(d) >  machine_eps() * k && cnt < max_iters ) {
@@ -52,7 +52,7 @@ int main () {
             ans = ans + d;
             cnt++;
         }
-        printf("| %.3Lf | %.20Lf | %.20Lf |      %d       |\n", x, ans, f, cnt);
+        printf("| %.2Lf | %.20Lf | %.20Lf |      %d       |\n", x, ans, f, cnt);
         printf("___________________________________________________________________\n");
     }
     return 0;
