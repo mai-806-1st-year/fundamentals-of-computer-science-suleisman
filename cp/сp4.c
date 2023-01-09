@@ -51,8 +51,12 @@
 }*/
 
 
-double F ( double x) {
+double f_1 ( double x) {
     return cos(2/x) - 2*sin(1/x) + 1/x;
+}
+
+double f_2 (double x) {
+    return sqrt(1 - (0.4*x*x)) - asin(x);
 }
 
 double dichotomy( double f( double ), double a, double b, double eps) {
@@ -65,7 +69,19 @@ double dichotomy( double f( double ), double a, double b, double eps) {
             a = x;
         }
     }
-    return (a+b)/2;
+    return (a + b) / 2;
+}
+
+double itter(double f(double), double a, double b, double eps) {
+    double x = (a + b) / 2;
+    while (fabs(f(x) - x) >= eps) {
+        if(f(x)<0) {
+            break;
+        }
+        x = f(x);
+        
+    }
+    return x;
 }
 
 double eps() {
@@ -78,5 +94,6 @@ double eps() {
 
 
 int main () {
-     printf(" %11.7f\n", dichotomy(F, 1, 2, eps()));
+    printf(" %11.7f\n", dichotomy(f_1, 1, 2, eps()));
+    printf(" %11.7f\n", itter(f_2, 0, 1, eps()));
 }
