@@ -3640,6 +3640,28 @@ serafim@serafim-VirtualBox:~/lab20$ file -Z file1.txt
 file1.txt: ASCII text
 serafim@serafim-VirtualBox:~/lab20$ file -z file1.txt
 file1.txt: ASCII text
+serafim@serafim-VirtualBox:~/lab20$ touch file1.txt
+serafim@serafim-VirtualBox:~/lab20$ touch -a file1.txt
+serafim@serafim-VirtualBox:~/lab20$ touch -m file1.txt
+serafim@serafim-VirtualBox:~/lab20$ touch -c testfile1.txt
+serafim@serafim-VirtualBox:~/lab20$ touch -c -t 01161026 file2.txt
+serafim@serafim-VirtualBox:~/lab20$ ls -l
+итого 4
+-rw-rw-r-- 1 serafim serafim  0 мая  3 10:18 file1.txt
+-rw-rw-r-- 1 serafim serafim 12 янв 16 10:26 file2.txt
+serafim@serafim-VirtualBox:~/lab20$ touch -r file1.txt file2.txt
+serafim@serafim-VirtualBox:~/lab20$ ls -l
+итого 4
+-rw-rw-r-- 1 serafim serafim  0 мая  3 10:18 file1.txt
+-rw-rw-r-- 1 serafim serafim 12 мая  3 10:18 file2.txt
+serafim@serafim-VirtualBox:~/lab20$ touch -t 202011101923.33 file3.txt
+serafim@serafim-VirtualBox:~/lab20$ ls -l
+итого 4
+-rw-rw-r-- 1 serafim serafim  0 мая  3 10:18 file1.txt
+-rw-rw-r-- 1 serafim serafim 12 мая  3 10:18 file2.txt
+-rw-rw-r-- 1 serafim serafim  0 ноя 10  2020 file3.txt
+serafim@serafim-VirtualBox:~/lab20$ 
+
 
 
     
