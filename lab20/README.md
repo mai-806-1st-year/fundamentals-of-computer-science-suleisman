@@ -34,54 +34,152 @@
 <b>Подпись преподавателя</b> ________________
 ## 8. Распечатка протокола 
 ```
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
+serafim@serafim-VirtualBox:~/lab20$ diff file1.txt file2.txt
+serafim@serafim-VirtualBox:~/lab20$ diff file1.txt file2.txt
+2c2
+< word
+---
+> world
+serafim@serafim-VirtualBox:~/lab20$ diff -q file1.txt file2.txt
+Файлы file1.txt и file2.txt различаются
+serafim@serafim-VirtualBox:~/lab20$ diff -s file1.txt file2.txt
+2c2
+< word
+---
+> world
+serafim@serafim-VirtualBox:~/lab20$ diff -c file1.txt file2.txt
+*** file1.txt 2023-05-03 09:30:01.076356711 +0300
+--- file2.txt 2023-05-03 09:30:16.988487490 +0300
+***************
+* 1,2 **
+  helo 
+! word
+--- 1,2 ----
+  helo 
+! world
+serafim@serafim-VirtualBox:~/lab20$ diff -u file1.txt file2.txt
+--- file1.txt 2023-05-03 09:30:01.076356711 +0300
++++ file2.txt 2023-05-03 09:30:16.988487490 +0300
+@@ -1,2 +1,2 @@
+ helo 
+-word
++world
+serafim@serafim-VirtualBox:~/lab20$ diff -y file1.txt file2.txt
+helo         helo 
+word             | world
+serafim@serafim-VirtualBox:~/lab20$ diff -e file1.txt file2.txt
+2c
+world
+.
+serafim@serafim-VirtualBox:~/lab20$ diff -n file1.txt file2.txt
+d2 1
+a2 1
+world
+serafim@serafim-VirtualBox:~/lab20$ diff -a file1.txt file2.txt
+2c2
+< word
+---
+> world
+serafim@serafim-VirtualBox:~/lab20$ diff -t file1.txt file2.txt
+2c2
+< word
+---
+> world
+serafim@serafim-VirtualBox:~/lab20$ diff -l file1.txt file2.txt
 
-typedef struct{
-    int i, j, l;
-} triangle;
 
-int max(int a,int b){
-    return a<b ? b:a;
-}
-int min(int a,int b ){
-    return a>b ? b:a;
-}
-int sign(int a){
-    return a>0?1 :a <0 ?-1:0;
-}
+2023-05-03 09:34         diff -l file1.txt file2.txt          Страница 1
+
+
+2c2
+< word
+---
+> world
 
 
 
-int main(void)
-{
-    triangle s={20,0,11};
-    for(int k=0;k<50;k++){
-        triangle b={s.i,s.j,s.l};
-        s.i=((b.i-k)*max(b.j,b.l)+(b.j-k)*min(b.i,b.l)+(b.l-k)*max(b.i,b.j))%23;
-        s.j=-((b.i-k)*min(b.j,b.l)+(b.j-k)*max(b.i,b.l)+(b.l-k)*min(b.i,b.j))%27;
-        s.l=abs(b.i+b.j-b.l-k)*sign(b.i-b.j+b.l-k);
-        if(s.j<10 && s.j>=0 && s.i>=-10 && s.i<=0) {
-            if(s.j>=s.i+10){
-             printf("yes  %d i=%d, j=%d, l=%d\n", k, s.i, s.j,s.l);
-            }
-        }
-        if(s.j>10 && s.j<=20 && s.i>=-10 && s.i<=0) {
-            if(s.j<=-s.i+10) {
-                printf("yes  %d i=%d, j=%d, l=%d\n", k, s.i, s.j,s.l);
-            }
-        }
-        if(s.j==10 && s.i>=-10 && s.i<=0) {
-             printf("yes  %f i=%d, j=%d, l=%d\n", k, s.i, s.j, s.l);
-        }
-    
-    }
-    
-    
-    
-  return 0;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+serafim@serafim-VirtualBox:~/lab20$ diff -i file1.txt file2.txt
+2c2
+< word
+---
+> world
+serafim@serafim-VirtualBox:~/lab20$ diff -E file1.txt file2.txt
+2c2
+< word
+---
+> world
+serafim@serafim-VirtualBox:~/lab20$ diff -Z file1.txt file2.txt
+2c2
+< word
+---
+> world
+serafim@serafim-VirtualBox:~/lab20$ diff b file1.txt file2.txt
+diff: лишний операнд ?file2.txt?
+diff: По команде ?diff --help? можно получить дополнительную информацию.
+serafim@serafim-VirtualBox:~/lab20$ diff -b file1.txt file2.txt
+2c2
+< word
+---
+> world
+serafim@serafim-VirtualBox:~/lab20$ diff -B file1.txt file2.txt
+2c2
+< word
+---
+> world
 
     
 ```
