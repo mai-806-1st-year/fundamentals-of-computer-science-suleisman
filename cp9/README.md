@@ -295,6 +295,45 @@ void tableSearch(Table *table, char key[KEY_LENGTH]) {
 }
   ```
 ## 8. Распечатка протокола
+```
+serafim@serafim-VirtualBox:~/programs/kp_nine$ valgrind ./main
+==6619== Memcheck, a memory error detector
+==6619== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==6619== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==6619== Command: ./main
+==6619== 
+aaaa  bbb
+dddd  ccc
+xxxx  ahaha
+fofo  daaaa
+qqqq  ccccpp
+cvcv  xsa
+vbtd  val0000
+zzzz  ru
+daae  ffsdf
+
+aaaa  bbb
+cvcv  xsa
+daae  ffsdf
+dddd  ccc
+fofo  daaaa
+qqqq  ccccpp
+vbtd  val0000
+xxxx  ahaha
+zzzz  ru
+fofo
+daaaa
+==6619== 
+==6619== HEAP SUMMARY:
+==6619==     in use at exit: 0 bytes in 0 blocks
+==6619==   total heap usage: 13 allocs, 13 frees, 7,291 bytes allocated
+==6619== 
+==6619== All heap blocks were freed -- no leaks are possible
+==6619== 
+==6619== For lists of detected and suppressed errors, rerun with: -s
+==6619== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+
+```
 
 ## 9. Дневник отладки должен содержать дату и время сеансов отладки и основные события (ошибки в сценарии и программе, нестандартные ситуации) и краткие комментарии к ним. В дневнике отладки приводятся сведения об использовании других ЭВМ, существенном участии преподавателя и других лиц в написании и отладке программы.
 
