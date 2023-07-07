@@ -86,7 +86,7 @@ int Preorder(char ch, TreeNode * node, int flag) {
             Preorder(ch, node->right,0);}
            
     } else if(node->value == ch && flag == 0) {
-           printf("!%c\n", node->value);
+           
            node->value ='!';
            ++flag;
            return 1;
@@ -105,7 +105,7 @@ void nodeFunc( TreeNode * node) {
             nodeFunc(node->right);
         } else {
               
-              printf("%c\n", node->right->value);
+              
               int flag = 0;
               TreeNode * node_1 = node->right;
               
@@ -118,7 +118,7 @@ void nodeFunc( TreeNode * node) {
                   } 
                   if(flag ==1) {
                       if(Preorder(node->right->value, node_1, 0) == 1) {
-                          printf("!!%c\n", node->right->value);
+                          
                           node->right->value ='!';
                       }
                       ++flag;
@@ -128,7 +128,7 @@ void nodeFunc( TreeNode * node) {
         if(node->left->value == '*') {
             nodeFunc(node->left);
         } else {
-              printf("%c\n", node->left->value);
+              
               
               int flag = 0;
               TreeNode * node_1 = node->left;
@@ -142,7 +142,7 @@ void nodeFunc( TreeNode * node) {
                   } 
                   if(flag ==1) {
                       if(Preorder(node->left->value, node_1, 0) == 1) {
-                          printf("!!%c\n", node->left->value);
+                          
                           node->left->value ='!';
                       }
                       ++flag;
@@ -152,7 +152,7 @@ void nodeFunc( TreeNode * node) {
           
         
      }else {
-         printf("%c\n", node->value);
+        
               int flag = 0;
               TreeNode * node_1 = node;
               
@@ -166,7 +166,7 @@ void nodeFunc( TreeNode * node) {
                   if(flag ==1) {
                       if(Preorder(node->value, node_1, 0) == 1) {
                       
-                          printf("!!%c\n", node->value);
+                          
                           node->value ='!';
                                              }
                    ++flag;                          
@@ -282,6 +282,39 @@ bool treeF(Tree *tree) {
     Probel_2 (tree->root);
     Probel_3 (tree->root);
     
+}
+
+void treeInorder(Tree* tree) {
+    TreeNode* node = tree->root;
+
+    TreeNode* last = NULL;
+    while (node != NULL) {
+        if (last == node->parent) {
+            if (node->left != NULL) {
+                last = node;
+                node = node->left;
+                continue;
+            }
+            else
+                last = NULL;
+        }
+        if (last == node->left) {
+            printf("%c ", node->value);
+
+            if (node->right != NULL) {
+                last = node;
+                node = node->right;
+                continue;
+            }
+            else
+                last = NULL;
+        }
+        if (last == node->right) {
+            last = node;
+            node = node->parent;
+        }
+    }
+    printf("\n");
 }
 
 void treeDestroy(Tree *tree)  {
