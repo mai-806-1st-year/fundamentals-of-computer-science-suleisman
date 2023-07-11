@@ -274,6 +274,39 @@ void stackBinPrint(StackBin *stack) {
 ```
 ## 8. Протокол  
 ```
+serafim@serafim-VirtualBox:~/programs/laba24$ valgrind ./lab24
+==2181== Memcheck, a memory error detector
+==2181== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==2181== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==2181== Command: ./lab24
+==2181== 
+enter expression
+(2*3)/(8*2)
+/
+ *
+  2
+  3
+ *
+  8
+  2
+
+/
+ 3
+ 8
+
+3 / 8 
+
+count = 0
+==2181== 
+==2181== HEAP SUMMARY:
+==2181==     in use at exit: 0 bytes in 0 blocks
+==2181==   total heap usage: 22 allocs, 22 frees, 2,402 bytes allocated
+==2181== 
+==2181== All heap blocks were freed -- no leaks are possible
+==2181== 
+==2181== For lists of detected and suppressed errors, rerun with: -s
+==2181== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+
 
 ```
 
