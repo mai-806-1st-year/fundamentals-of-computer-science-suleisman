@@ -82,16 +82,19 @@ void treePrint(Tree * const tree) {
 int Preorder(char ch, TreeNode * node, int flag) {
     
     if(node->value == '*' && flag == 0) {
-            if(Preorder(ch, node->left,0)==0) {
-            Preorder(ch, node->right,0);}
+            if(Preorder(ch, node->left, 0) == 0) {
+                Preorder(ch, node->right, 0);
+            }
            
     } else if(node->value == ch && flag == 0) {
            
-           node->value ='!';
-           ++flag;
-           return 1;
-      } else { return 0;}
-              
+               node->value = '!';
+               ++flag;
+               return 1;
+               
+           } else {
+                 return 0;
+             }             
 }
 
 
@@ -104,80 +107,80 @@ void nodeFunc( TreeNode * node) {
         if(node->right->value == '*') {
             nodeFunc(node->right);
         } else {
-              
-              
               int flag = 0;
               TreeNode * node_1 = node->right;
-              
               while(flag != 2 ) {
                   if(flag == 0) {
                        if(node_1->parent->value != '/') {
-                            node_1=node_1->parent;
-                       } else { flag=1;node_1=node_1->parent->left;}
-             
+                            node_1 = node_1->parent;
+                       } else { 
+                             flag = 1;
+                             node_1 = node_1->parent->left;
+                         }
                   } 
                   if(flag ==1) {
                       if(Preorder(node->right->value, node_1, 0) == 1) {
-                          
                           node->right->value ='!';
                       }
                       ++flag;
-                  } 
-            }} 
+                  }
+              } 
+          }  
+     
          
         if(node->left->value == '*') {
             nodeFunc(node->left);
         } else {
-              
-              
               int flag = 0;
               TreeNode * node_1 = node->left;
               
               while(flag != 2 ) {
                   if(flag == 0) {
                        if(node_1->parent->value != '/') {
-                            node_1=node_1->parent;
-                       } else { flag=1;node_1=node_1->parent->left;}
+                            node_1 = node_1->parent;
+                       } else { 
+                             flag = 1;
+                             node_1 = node_1->parent->left;
+                         }
              
                   } 
-                  if(flag ==1) {
+                  if(flag == 1) {
                       if(Preorder(node->left->value, node_1, 0) == 1) {
                           
                           node->left->value ='!';
                       }
                       ++flag;
                   } 
-            }
+              }
           }                 
           
         
-     }else {
-        
-              int flag = 0;
-              TreeNode * node_1 = node;
+    } else {
+          int flag = 0;
+          TreeNode * node_1 = node;
               
-              while(flag != 2 ) {
-                  if(flag == 0) {
-                       if(node_1->parent->value != '/') {
-                            node_1=node_1->parent;
-                       } else { flag=1;node_1=node_1->parent->left;}
-             
-                  } 
-                  if(flag ==1) {
-                      if(Preorder(node->value, node_1, 0) == 1) {
-                      
-                          
+          while(flag != 2 ) {
+              if(flag == 0) {
+                  if(node_1->parent->value != '/') {
+                      node_1 = node_1->parent;
+                  } else { 
+                        flag = 1;
+                        node_1 = node_1->parent->left;
+                    }
+              } 
+                  if(flag == 1) {
+                      if(Preorder(node->value, node_1, 0) == 1) {                          
                           node->value ='!';
-                                             }
-                   ++flag;                          
-                  } 
                       }
+                      ++flag;                          
+                  } 
+          }
         	
       }
    
 }
 
-void Probel_1 (TreeNode * node) {
+void nodeDelete1 (TreeNode * node) {
     
     TreeNode *copy = node;
     if (node->value == '*') {
@@ -199,14 +202,15 @@ void Probel_1 (TreeNode * node) {
     }
     if (copy != NULL) {
         if (copy->left != NULL)
-            Probel_1(copy->left);
+            nodeDelete1(copy->left);
         if (copy->right != NULL)
-            Probel_1(copy->right);
+            nodeDelete1(copy->right);
     
     
-}}
+    }
+}
 
-void Probel_2 (TreeNode * node) {
+void nodeDelete2(TreeNode * node) {
     
     TreeNode *copy = node;
     if (node->value == '*') {
@@ -228,44 +232,15 @@ void Probel_2 (TreeNode * node) {
     }
     if (copy != NULL) {
         if (copy->left != NULL)
-            Probel_2(copy->left);
+            nodeDelete2(copy->left);
         if (copy->right != NULL)
-            Probel_2(copy->right);
+            nodeDelete2 (copy->right);
     }
 
 }
 
-    
-    
-    /*if (node->value == '*') {	
-        if (node->right->value == '!' ) {
-                   printf("a");
-                   free(node->right);
-                   node->right=NULL;
-                   node->value=node->left->value;
-                   Probel(node->left);
-         } 
-         if(node->right->value == '*') {
-             Probel(node->left);
-         }
-    }
-    
-    if(node->value == '!') {
-        free(node);
-        node=NULL;
-        if(node->parent->value == '!') {
-            free(node->parent);
-            node->parent = NULL;
-        }
-    }
-    if(node->value != '!' && node->value != '*') {
-        if(  node->parent->value != '!' && node->parent->value != '*') {
-            free(node);
-            node = NULL;
-        }    
-    }*/
 	
-void Probel_3 ( TreeNode * node) {
+void nodeDelete3( TreeNode * node) {
      
         if(node->right->value == '!'){
             node->right->value ='1';
@@ -275,12 +250,38 @@ void Probel_3 ( TreeNode * node) {
         }
     
 }
+int checkNode( TreeNode * node) {
+     if(  node->value == '*') {
+         if(node->right->value == '0') {
+             return 1;
+         } else if(node->right->value == '*') {
+                    checkNode(node->right);
+                }
+         if(node->left->value == '0') { 
+             return 1;
+         } else if(node->left->value == '*') {
+                    checkNode(node->left);
+                }
+     } else if(node->value == '0') {return 1;}
+}
+
+int treeCheck(Tree *tree) {
+   if(checkNode(tree->root->right) == 1){
+       return 1;
+   } else if(checkNode(tree->root->left) == 1) {
+              return 2;
+          } else {
+                return 0;
+            }
+    
+}
 
 bool treeF(Tree *tree) {
+
     nodeFunc( tree->root->right);
-    Probel_1 (tree->root);
-    Probel_2 (tree->root);
-    Probel_3 (tree->root);
+    nodeDelete1 (tree->root);
+    nodeDelete2 (tree->root);
+    nodeDelete3 (tree->root);
     
 }
 
