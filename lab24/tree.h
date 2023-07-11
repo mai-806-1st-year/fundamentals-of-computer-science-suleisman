@@ -1,4 +1,3 @@
-
 #ifndef TREE_H
 #define TREE_H
 
@@ -26,6 +25,7 @@ void treeFromPostfix(Tree *tree, Stack *postfix, StackBin *stack);
 void treeDelOnes(Tree *tree);
 bool treeF(Tree *tree);
 void treeInorder(Tree *tree);
+int treeCheck(Tree *tree);
 int treeCount(Tree *tree);
 
 #endif //TREE_H
