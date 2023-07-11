@@ -35,13 +35,20 @@ int main() {
 	treeFromPostfix(&tree, &res, &s);
 	treePrint(&tree);
 	printf("\n");
-	treeF(&tree);
-	treePrint(&tree);
-	printf("\n");
-	treeInorder(&tree);
-	printf("\n");
-	printf("count = %d\n", treeCount(&tree));
-
+	if(treeCheck(&tree) == 1) {
+	   printf("ERRORR\n");
+	} else if(treeCheck(&tree) == 2) {
+	           printf("0\n0\n ");
+	           
+	       } else {
+	
+	             treeF(&tree);
+	             treePrint(&tree);
+	             printf("\n");
+	             treeInorder(&tree);
+	             printf("\n");
+	             printf("count = %d\n", treeCount(&tree));
+                 }     
 
 	treeDestroy(&tree);
 	stackDestroy(&stack);
