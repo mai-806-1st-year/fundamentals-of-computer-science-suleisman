@@ -35,27 +35,519 @@
 Сначала сортируем стек с помощью двух дополнительных стеков в итоге на вершине получаем максимальный элемент и затем удаляем его.     
  
 ## 7. Сценарий выполнения работы [план работы, первоначальный текст программы в черновике (можно на отдельном листе) и тесты либо соображения по тестированию]. 
-Тесты:
-```
-1
-1
+main.c
+
+```.c
+#include <stdlib.h>
+#include <stdio.h>
+
+#include "matrix.h"
+
+void printMenu() {
+    printf(
+           "1 - print simple matrix\n"
+           "2 - print matrix\n"
+           "3 - multiplication\n" 
+           "4 - exit\n");
+}
+
+
+
+int main(int argc, char* argv[]) {
+    FILE *file;
+    
+    if (argc == 2) {
+        file = fopen(argv[1], "r");
+    } else {
+          file = fopen("t.txt", "r");
+      }
+    Matrix matrix;
+    matrixCreate(&matrix);
+    matrixScan(file, &matrix);
+    printMenu();
+    int a;
+    while (1) {
+        scanf("%d", &a);
+       
+        if (a == 1) {
+            matrixPrint(&matrix);
+        } else if (a == 2) {
+              matrixPrintTable(&matrix); 
+          } else if (a == 3) {
+
+                size_t *arr[2];
+                matrixGetSize(&matrix, arr);
+                size_t n = *arr[0];
+                int string[n];
+                printf("enter vector (1x%ld)   ", n);
+                for (int i = 0; i < n; ++i) 
+                scanf("%d", &string[i]);
+                func(&matrix, string);
+            } else if (a == 4) {
+                  matrixDestroy(&matrix);
+                  fclose(file);
+                  break;
+              } else printf("incorrect parametr\n");
+                             
+    }
+}
 
 ```
+matrix.c
+
+```.c
+#include <stdlib.h>
+#include <stdio.h>
+
+#include "matrix.h"
+
+void matrixCreate(Matrix *matrix) {
+    matrix->n = 0;
+    matrix->m = 0;
+    matrix->size = 0;
+    matrix->ye = NULL;
+    matrix->lb = NULL;
+    
+}
+
+void matrixDestroy(Matrix *matrix) {
+    free(matrix->lb);
+    free(matrix->ye);
+    matrix->n = 0;
+    matrix->m = 0;
+    matrixCreate(matrix);
+    
+}
+
+void matrixResize(Matrix *matrix) {
+    if (matrix->size == 0) {
+        matrix->size =1;
+        
+        matrix->ye = malloc(sizeof(int));
+        matrix->lb = malloc(sizeof(int)*2);
+        matrix->lb[0] = -1;
+        
+    }
+    else {
+        matrix->size = matrix->size * 2;
+        
+        matrix->ye = realloc(matrix->ye, sizeof(int)*matrix->size);
+        matrix->lb = realloc(matrix->lb, sizeof(int)*(matrix->size + 1));
+    }
+}
+
+void matrixSet(Matrix *matrix, int val, int i, int j) {
+    int k = 0;
+
+    if (matrix->size == 0) matrixResize(matrix);
+
+    for(k = 0; k < matrix->size; ++k)
+        if (matrix->lb[k] == -1) {
+            break;
+        }
+
+    if (k == matrix->size) {
+        matrixResize(matrix);
+    }
+
+    matrix->lb[k] = i*matrix->m + j;
+    matrix->lb[k + 1]= -1;
+    
+    matrix->ye[k] = val;
+}
+
+
+int matrixGet(Matrix *matrix, size_t i, size_t j) {
+    for (int k = 0; matrix->lb[k] != -1; ++k) {
+        if (matrix->lb[k] == i * matrix->m + j) {
+            return matrix->ye[k];
+            
+        }
+    }
+    
+    return 0;
+}
+
+void matrixScan(FILE *file, Matrix *matrix) {
+    fscanf(file, "%ld %ld", &matrix->n, &matrix->m);
+    int val;
+    for (int k = 0; k < matrix->n*matrix->m; ++k) {
+        fscanf(file, "%d", &val);
+        
+        if (val != 0) {
+            matrixSet(matrix, val, k / matrix->m, k % matrix->m);
+            
+        }
+    }
+}
+
+void matrixPrint(Matrix *matrix) {
+    for(int i = 0; i < matrix->size; ++i) {
+    
+        if (matrix->lb[i] == -1) {
+            break;
+        }
+        
+        printf("(%d %d)\n", matrix->lb[i], matrix->ye[i]);
+    }
+}
+
+void matrixGetSize(Matrix *matrix, size_t** arr) {
+
+    arr[0] = &matrix->n;
+    arr[1] = &matrix->m;
+}
+
+void func(Matrix *matrix, int* arr) {
+
+    int result[matrix->m];
+    int v;
+    
+    int count = 0;
+    printf("res = (");
+    for (int i = 0; i < matrix->m; ++i) {
+        v = 0;
+        
+        for (int j = 0; j < matrix->n; ++j) {
+            int val = matrixGet(matrix, j, i);
+            v = v + (val * arr[j]);
+        }
+        result[i] = v;
+        printf(" %d", result[i]);
+        
+        if (result[i] > 0){
+            ++count;
+        }
+    }
+    printf(" ) count = %d\n", count);
+}
+
+void matrixPrintTable(Matrix *matrix) {
+    
+    for(size_t i = 0; i < matrix->n; ++ i) {
+    
+        for(size_t j = 0; j < matrix->m; ++j) 
+        
+            printf("%d ", matrixGet(matrix, i, j));
+            
+            
+        printf("\n");
+    }
+}#include <stdlib.h>
+#include <stdio.h>
+
+#include "matrix.h"
+
+void matrixCreate(Matrix *matrix) {
+    matrix->n = 0;
+    matrix->m = 0;
+    matrix->size = 0;
+    matrix->ye = NULL;
+    matrix->lb = NULL;
+    
+}
+
+void matrixDestroy(Matrix *matrix) {
+    free(matrix->lb);
+    free(matrix->ye);
+    matrix->n = 0;
+    matrix->m = 0;
+    matrixCreate(matrix);
+    
+}
+
+void matrixResize(Matrix *matrix) {
+    if (matrix->size == 0) {
+        matrix->size =1;
+        
+        matrix->ye = malloc(sizeof(int));
+        matrix->lb = malloc(sizeof(int)*2);
+        matrix->lb[0] = -1;
+        
+    }
+    else {
+        matrix->size = matrix->size * 2;
+        
+        matrix->ye = realloc(matrix->ye, sizeof(int)*matrix->size);
+        matrix->lb = realloc(matrix->lb, sizeof(int)*(matrix->size + 1));
+    }
+}
+
+void matrixSet(Matrix *matrix, int val, int i, int j) {
+    int k = 0;
+
+    if (matrix->size == 0) matrixResize(matrix);
+
+    for(k = 0; k < matrix->size; ++k)
+        if (matrix->lb[k] == -1) {
+            break;
+        }
+
+    if (k == matrix->size) {
+        matrixResize(matrix);
+    }
+
+    matrix->lb[k] = i*matrix->m + j;
+    matrix->lb[k + 1]= -1;
+    
+    matrix->ye[k] = val;
+}
+
+
+int matrixGet(Matrix *matrix, size_t i, size_t j) {
+    for (int k = 0; matrix->lb[k] != -1; ++k) {
+        if (matrix->lb[k] == i * matrix->m + j) {
+            return matrix->ye[k];
+            
+        }
+    }
+    
+    return 0;
+}
+
+void matrixScan(FILE *file, Matrix *matrix) {
+    fscanf(file, "%ld %ld", &matrix->n, &matrix->m);
+    int val;
+    for (int k = 0; k < matrix->n*matrix->m; ++k) {
+        fscanf(file, "%d", &val);
+        
+        if (val != 0) {
+            matrixSet(matrix, val, k / matrix->m, k % matrix->m);
+            
+        }
+    }
+}
+
+void matrixPrint(Matrix *matrix) {
+    for(int i = 0; i < matrix->size; ++i) {
+    
+        if (matrix->lb[i] == -1) {
+            break;
+        }
+        
+        printf("(%d %d)\n", matrix->lb[i], matrix->ye[i]);
+    }
+}
+
+void matrixGetSize(Matrix *matrix, size_t** arr) {
+
+    arr[0] = &matrix->n;
+    arr[1] = &matrix->m;
+}
+
+void func(Matrix *matrix, int* arr) {
+
+    int result[matrix->m];
+    int v;
+    
+    int count = 0;
+    printf("res = (");
+    for (int i = 0; i < matrix->m; ++i) {
+        v = 0;
+        
+        for (int j = 0; j < matrix->n; ++j) {
+            int val = matrixGet(matrix, j, i);
+            v = v + (val * arr[j]);
+        }
+        result[i] = v;
+        printf(" %d", result[i]);
+        
+        if (result[i] > 0){
+            ++count;
+        }
+    }
+    printf(" ) count = %d\n", count);
+}
+
+void matrixPrintTable(Matrix *matrix) {
+    
+    for(size_t i = 0; i < matrix->n; ++ i) {
+    
+        for(size_t j = 0; j < matrix->m; ++j) 
+        
+            printf("%d ", matrixGet(matrix, i, j));
+            
+            
+        printf("\n");
+    }
+}
 ```
-2
-1 2
+matrix.h
+
+```.h
+#ifndef MATRIX_H
+#define MATRIX_H
+
+#include <stdlib.h>
+#include <stdio.h>
+
+typedef struct {
+    size_t n, m, size;
+    int *lb;
+    int *ye;
+} Matrix;
+
+void matrixCreate(Matrix *matrix);
+
+void matrixDestroy(Matrix *matrix);
+
+void matrixScan(FILE *file, Matrix *matrix);
+
+void matrixPrint(Matrix *matrix);
+
+void matrixPrintTable(Matrix *matrix);
+
+void matrixResize(Matrix *matrix);
+
+void matrixSet(Matrix *matrix, int val, int i, int j);
+
+int matrixGet(Matrix *matrix, size_t i, size_t j);
+
+void matrixGetSize(Matrix *matrix, size_t **arr);
+
+void func(Matrix *matrix, int* arr);
+
+#endif // MATRIX_H
+```
+## 8. Протокол 
+```
+serafim@serafim-VirtualBox:~/programs/kp7$ valgrind ./kp7 t.txt
+==4233== Memcheck, a memory error detector
+==4233== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==4233== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==4233== Command: ./kp7 t.txt
+==4233== 
+1 - print simple matrix
+2 - print matrix
+3 - multiplication
+4 - exit
 1
-```
-```
+(9 8)
+(12 2)
+(17 6)
+(31 7)
+(34 8)
+2
+0 0 0 0 0 0 0 
+0 0 8 0 0 2 0 
+0 0 0 6 0 0 0 
+0 0 0 0 0 0 0 
+0 0 0 7 0 0 8 
+0 0 0 0 0 0 0 
 3
-1 2 3
-2 1
-```
-## 8. Протокол  
-```
-serafim@serafim-VirtualBox:~/programs/lab25$ make
-gcc -c sort.c -o sort.o
-gcc main.o stack.o sort.o -o lab25 
+enter vector (1x6)   1 3 5 6 9 4
+res = ( 0 0 24 93 0 6 72 ) count = 4
+4
+==4233== 
+==4233== HEAP SUMMARY:
+==4233==     in use at exit: 0 bytes in 0 blocks
+==4233==   total heap usage: 12 allocs, 12 frees, 6,752 bytes allocated
+==4233== 
+==4233== All heap blocks were freed -- no leaks are possible
+==4233== 
+==4233== For lists of detected and suppressed errors, rerun with: -s
+==4233== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+serafim@serafim-VirtualBox:~/programs/kp7$ valgrind ./kp7 t2.txt
+==4257== Memcheck, a memory error detector
+==4257== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==4257== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==4257== Command: ./kp7 t2.txt
+==4257== 
+1 - print simple matrix
+2 - print matrix
+3 - multiplication
+4 - exit
+1
+(2 9)
+2
+0 0 
+9 0 
+3
+enter vector (1x2)   3 4
+res = ( 36 0 ) count = 1
+4
+==4257== 
+==4257== HEAP SUMMARY:
+==4257==     in use at exit: 0 bytes in 0 blocks
+==4257==   total heap usage: 6 allocs, 6 frees, 6,628 bytes allocated
+==4257== 
+==4257== All heap blocks were freed -- no leaks are possible
+==4257== 
+==4257== For lists of detected and suppressed errors, rerun with: -s
+==4257== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+serafim@serafim-VirtualBox:~/programs/kp7$ valgrind ./kp7 t3.txt
+==4260== Memcheck, a memory error detector
+==4260== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==4260== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==4260== Command: ./kp7 t3.txt
+==4260== 
+1 - print simple matrix
+2 - print matrix
+3 - multiplication
+4 - exit
+1
+(2 1)
+(4 8)
+2
+0 0 1 
+0 8 0 
+0 0 0 
+3
+enter vector (1x3)   5 4 1
+res = ( 0 32 5 ) count = 2
+4    
+==4260== 
+==4260== HEAP SUMMARY:
+==4260==     in use at exit: 0 bytes in 0 blocks
+==4260==   total heap usage: 8 allocs, 8 frees, 6,648 bytes allocated
+==4260== 
+==4260== All heap blocks were freed -- no leaks are possible
+==4260== 
+==4260== For lists of detected and suppressed errors, rerun with: -s
+==4260== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+serafim@serafim-VirtualBox:~/programs/kp7$ valgrind ./kp7 t4.txt
+==4262== Memcheck, a memory error detector
+==4262== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==4262== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==4262== Command: ./kp7 t4.txt
+==4262== 
+1 - print simple matrix
+2 - print matrix
+3 - multiplication
+4 - exit
+1
+(0 1)
+(9 1)
+(14 8)
+(35 7)
+(48 3)
+(70 2)
+(74 5)
+2
+1 0 0 0 0 0 0 0 0 
+1 0 0 0 0 8 0 0 0 
+0 0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 7 
+0 0 0 0 0 0 0 0 0 
+0 0 0 3 0 0 0 0 0 
+0 0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 2 0 
+0 0 5 0 0 0 0 0 0 
+3
+enter vector (1x9)   9 5 3 4 1 2  8 8 0
+res = ( 14 0 0 6 0 40 0 16 28 ) count = 5
+4
+==4262== 
+==4262== HEAP SUMMARY:
+==4262==     in use at exit: 0 bytes in 0 blocks
+==4262==   total heap usage: 12 allocs, 12 frees, 6,752 bytes allocated
+==4262== 
+==4262== All heap blocks were freed -- no leaks are possible
+==4262== 
+==4262== For lists of detected and suppressed errors, rerun with: -s
+==4262== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+
+
 ```
 
 ## 9. Дневник отладки должен содержать дату и время сеансов отладки и основные события (ошибки в сценарии и программе, нестандартные ситуации) и краткие комментарии к ним. В дневнике отладки приводятся сведения об использовании других ЭВМ, существенном участии преподавателя и других лиц в написании и отладке программы.
