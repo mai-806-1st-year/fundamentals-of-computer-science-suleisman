@@ -306,6 +306,113 @@ count = 0
 ==2181== 
 ==2181== For lists of detected and suppressed errors, rerun with: -s
 ==2181== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+serafim@serafim-VirtualBox:~/programs/laba24$ valgrind ./lab24
+==3173== Memcheck, a memory error detector
+==3173== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==3173== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==3173== Command: ./lab24
+==3173== 
+enter expression
+(3*3)/(3*3)
+/
+ *
+  3
+  3
+ *
+  3
+  3
+
+/
+ 1
+ 1
+
+1 / 1 
+
+count = 1
+==3173== 
+==3173== HEAP SUMMARY:
+==3173==     in use at exit: 0 bytes in 0 blocks
+==3173==   total heap usage: 22 allocs, 22 frees, 2,402 bytes allocated
+==3173== 
+==3173== All heap blocks were freed -- no leaks are possible
+==3173== 
+==3173== For lists of detected and suppressed errors, rerun with: -s
+==3173== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+serafim@serafim-VirtualBox:~/programs/laba24$ valgrind ./lab24
+==3994== Memcheck, a memory error detector
+==3994== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==3994== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==3994== Command: ./lab24
+==3994== 
+enter expression
+(2*3*8*7)/(3*6*a*9)
+/
+ *
+  *
+   *
+    2
+    3
+   8
+  7
+ *
+  *
+   *
+    3
+    6
+   a
+  9
+
+/
+ *
+  *
+   2
+   8
+  7
+ *
+  *
+   6
+   a
+  9
+
+2 * 8 * 7 / 6 * a * 9 
+
+count = 0
+==3994== 
+==3994== HEAP SUMMARY:
+==3994==     in use at exit: 0 bytes in 0 blocks
+==3994==   total heap usage: 38 allocs, 38 frees, 2,750 bytes allocated
+==3994== 
+==3994== All heap blocks were freed -- no leaks are possible
+==3994== 
+==3994== For lists of detected and suppressed errors, rerun with: -s
+==3994== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+serafim@serafim-VirtualBox:~/programs/laba24$ valgrind ./lab24
+==4017== Memcheck, a memory error detector
+==4017== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==4017== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==4017== Command: ./lab24
+==4017== 
+enter expression
+(0*8)/(7*2)
+/
+ *
+  0
+  8
+ *
+  7
+  2
+
+0
+0
+ ==4017== 
+==4017== HEAP SUMMARY:
+==4017==     in use at exit: 0 bytes in 0 blocks
+==4017==   total heap usage: 22 allocs, 22 frees, 2,402 bytes allocated
+==4017== 
+==4017== All heap blocks were freed -- no leaks are possible
+==4017== 
+==4017== For lists of detected and suppressed errors, rerun with: -s
+==4017== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 ```
